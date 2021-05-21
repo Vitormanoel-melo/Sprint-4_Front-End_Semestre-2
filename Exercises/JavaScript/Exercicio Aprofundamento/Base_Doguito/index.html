@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="styles.css" /> 
+        <title>Doguitos</title> 
+    </head>
+    <body>
+        <h1>SITE DE DOGUINHOS</h1>
+        <div id="dog1">
+            <img class="imagem1" src="Ibageins/2.jpeg" alt="Sammy"/> 
+            <h2>Sammy</h2>
+        </div>
+        <div id="dog2">
+            <img class="imagem2" src="Ibageins/3.jpeg" alt="Dragão"/> 
+            <h2>Dragão</h2>
+        </div>
+        <div id="dog3">
+            <img class="imagem3" src="Ibageins/4.jpeg" alt="Milton"/> 
+            <h2>Milton</h2>
+        </div>
+        <div id="dog4">
+            <img class="imagem4" src="Ibageins/5.jpeg" alt="Penny"/> 
+            <h2>Penny</h2>
+        </div>
+        <div id="dog5">
+            dsdfsd
+            <img class="imagem5" src="Ibageins/6.jpeg" alt="Nenem"/> 
+            <h2>Nenem</h2>
+        </div>
+        <div id="botauns">
+            <input id="btn" type="button" value="Nome dos Spitz" onclick="soSpitz()"/> <!--Filter  -->
+            <input id="btn" type="button" value="Idade Real" onclick="idadeReal()"/> <!-- Map -->
+            <input id="btn" type="button" value="Soma todas as Idades" onclick="idadeSoma()"/> <!-- Reduce -->
+            <input id="btn" type="button" value="Piorar Site" onclick="mudaTudo()"/>
+        </div>
+
+        <script> 
+        let dogs = [
+            {
+                nome: 'Sammy',
+                idade: 6,
+                raca: 'Samoieda'
+            },
+            {
+                nome: 'Dragão',
+                idade: 5,
+                raca: 'Spitz Alemão'
+            },
+            {
+                nome: 'Milton',
+                idade: 8,
+                raca: 'Spitz Alemão'
+            },
+            {
+                nome: 'Penny',
+                idade: 6,
+                raca: 'Spitz Alemão'
+            },
+            {
+                nome: 'Nenem',
+                idade: 4,
+                raca: 'Spitz Alemão'
+            },
+            ];
+
+            //solta seus script brabos aqui
+  
+            function soSpitz(){
+                function onlySiptz(dog){
+
+                    return dog.raca == "Spitz Alemão"; 
+                }
+
+                let arrayDogs = dogs.filter(onlySiptz)
+
+                for (let i = 0; i < arrayDogs.length; i++) {
+                    window.alert(`Nome: ${arrayDogs[i].nome}`)
+                }
+            }
+
+            function idadeReal(){
+                var dogsIdadeReal = dogs.map(function(dog1){
+                    dog1.idade = dog1.idade * 7;
+                    return dog1;
+                });
+
+                for (let i = 0; i < dogsIdadeReal.length; i++) {
+                    window.alert(`Nome: ${dogsIdadeReal[i].nome}, Idade: ${dogsIdadeReal[i].idade}`);
+                }
+            }
+
+            function idadeSoma(){
+                let idade = 0;
+                for (let i = 0; i < dogs.length; i++) {
+                    window.alert(idade + dogs[i].idade)
+                    idade = idade + dogs[i].idade
+                }
+            }
+
+            function mudaTudo(){
+                document.querySelector("body").style.backgroundImage = "unset"
+
+                let imagem = document.getElementsByTagName("img")
+                for (let i = 0; i < imagem.length; i++) {
+                    imagem[i].style.width = "500px";
+                }
+
+                for (let i = 0; i < 5; i++) {
+                    document.getElementsByTagName("h2")[i].style.color = "white"
+                }
+
+                document.getElementById("dog1").style.background = "none";
+                document.getElementById("dog2").style.background = "none";
+                document.getElementById("dog3").style.background = "none";
+                document.getElementById("dog4").style.background = "none";
+                document.getElementById("dog5").style.background = "none";
+
+                document.getElementsByTagName("img")[0].style.transform = "rotate(90deg)";
+                document.getElementsByTagName("img")[1].style.transform = "rotate(90deg)";
+                document.getElementsByTagName("img")[2].style.transform = "rotate(90deg)";
+                document.getElementsByTagName("img")[3].style.transform = "rotate(90deg)";
+                document.getElementsByTagName("img")[4].style.transform = "rotate(90deg)";
+
+                // document.getElementsByTagName("img")[0].style.marginRight = "250px";
+                // document.getElementsByTagName("img")[1].style.marginLeft = "250px";
+                // document.getElementsByTagName("img")[2].style.marginRight = "250px";
+                // document.getElementsByTagName("img")[3].style.marginRight = "250px";
+                // document.getElementsByTagName("img")[4].style.marginLeft = "250px";
+                // document.getElementsByTagName("img")[5].style.marginRight = "250px";
+                
+                document.getElementsByTagName("h2")[0].style.marginRight = "700px"
+                document.getElementsByTagName("h2")[0].style.marginBottom = "70px"
+                document.getElementsByTagName("h2")[0].style.transform = "rotate(90deg)"
+
+                document.getElementsByTagName("h2")[1].style.marginRight = "700px"
+                document.getElementsByTagName("h2")[1].style.marginBottom = "70px"
+                document.getElementsByTagName("h2")[1].style.transform = "rotate(90deg)"
+
+                document.getElementsByTagName("h2")[2].style.marginRight = "700px"
+                document.getElementsByTagName("h2")[2].style.marginBottom = "70px"
+                document.getElementsByTagName("h2")[2].style.transform = "rotate(90deg)"
+
+                document.getElementsByTagName("h2")[3].style.marginRight = "700px"
+                document.getElementsByTagName("h2")[3].style.marginBottom = "70px"
+                document.getElementsByTagName("h2")[3].style.transform = "rotate(90deg)"
+
+                document.getElementsByTagName("h2")[4].style.marginRight = "700px"
+                document.getElementsByTagName("h2")[4].style.marginBottom = "70px"
+                document.getElementsByTagName("h2")[4].style.transform = "rotate(90deg)"
+
+                document.body.style.backgroundImage = "url(Ibageins/10.gif)"
+                // document.body.style.backgroundRepeat = "no-repeat"
+                // document.body.style.backgroundSize = "100% 100%"
+
+                document.getElementById("botauns").style.transform = "rotate(90deg)"
+            }
+
+        </script> 
+    </body>
+</html>
