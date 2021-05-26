@@ -8,30 +8,38 @@ class Repositorio extends Component{
 
         this.state = {
             listaRepositorios : [],
-            username: ''
+            username: '',
+            listaAlternativa: [{id: 0, name: 'Not Found', description: 'Not Found', create_at: new Date(), size: 10}]
         }
     };
 
-    listarRepositorios = () =>{
+    listarRepositorios = (event) =>{
+        event.preventDefault();
 
         fetch(`https://api.github.com/users/${this.state.username}/repos`)
 
         .then(resposta => resposta.json())
 
         .then(dados => this.setState({ listaRepositorios : dados}))
-        
+
         .catch(erro => console.log(erro))
     }
 
+    atualizarEstado = (event) => {
+        this.setState({username : event.target.value}, () => {
+            console.log(this.state.username)
+        })
+    }
+
     componentDidMount(){
-        // this.listarRepositorios()
+
     }
 
     render(){
         return (
             <div>
                 <main>
-                    <section> Sessão de listagem dos repositórios
+                    {/* <section> Sessão de listagem dos repositórios
                         <h2>Lista de Repositórios</h2>
 
                         <table>
@@ -62,30 +70,34 @@ class Repositorio extends Component{
                             </tbody>
                         </table>
 
-                    </section>
-
-                    {/* <section>
-                        <h2>Buscar Repositório</h2>
-                        <form onSubmit={this.cadastrar}>
-                            <div>
-                                <input
-                                    type="text"
-                                    value={this.state.username}
-                                    onChange={this.atualizarEstado}
-                                    placeholder="Username"
-                                />
-
-                                <button type="submit">Buscar</button>
-                            </div>
-                        </form>
                     </section> */}
 
-                    {/* <section className="listagem">
+                    <section className="pesquisar-usuario">
+                        <div className="content centralizar">
+                            <h2>Buscar Repositório</h2>
+                            <form onSubmit={this.listarRepositorios} className="centralizar">
+                                <div>
+                                    <input
+                                        type="text"
+                                        value={this.state.username}
+                                        onChange={this.atualizarEstado}
+                                        placeholder="Username"
+                                    />
+
+                                    <button type="submit" onClick={this.limparCampos} disabled={this.state.username == '' && 'none'}>
+                                    Buscar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+
+                    <section className="listagem">
                         <div className="content">
+                            <h2>Listagem de Repositórios do usuário: {this.state.username}</h2>
                             {
                                 this.state.listaRepositorios.map( (repositorio) => {
                                     return(
-                                      <div className="repositorio">
+                                      <div className="repositorio" key={repositorio.id}>
                                           <div className="dados">
                                             <p><strong>Id:</strong> {repositorio.id}</p>
                                           </div>
@@ -106,7 +118,7 @@ class Repositorio extends Component{
                                 }).reverse()
                             }
                         </div>
-                    </section> */}
+                    </section>
 
                 </main>
             </div>

@@ -12,9 +12,9 @@ const routing = (
   <Router>
     <div>
       <Switch>
-        <Route exact path="/" component={App} />
+        <Route exact path="/" component={Repositorio} />
         <Route path="/repositorios" component={Repositorio} />
-        <Redirect to="/" component={App}/>
+        <Redirect to="/repositorios" component={Repositorio}/>
       </Switch>
     </div>
   </Router>
