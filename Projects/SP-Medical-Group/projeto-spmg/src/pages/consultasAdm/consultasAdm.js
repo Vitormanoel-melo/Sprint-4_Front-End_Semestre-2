@@ -356,6 +356,7 @@ export default class Consulta extends Component{
                                                 <div className="medico-consulta">
                                                     <p>Médico</p>
                                                     <input className="item"
+                                                        readOnly
                                                         name="nomeMedico"
                                                         type="text"
                                                         placeholder="Nome"
@@ -364,12 +365,14 @@ export default class Consulta extends Component{
                                                     />
                                                     <p>CRM</p>
                                                     <input className="item"
+                                                        readOnly
                                                         type="text"
                                                         placeholder="CRM"
                                                         value={consulta.idMedicoNavigation.crm}
                                                     />
                                                     <p>Especialidade</p>
                                                     <input className="item"
+                                                        readOnly
                                                         type="text"
                                                         placeholder="Especialidade"
                                                         value={consulta.idMedicoNavigation.idEspecialidadeNavigation.descricao}
@@ -379,6 +382,7 @@ export default class Consulta extends Component{
                                                 <div className="data-consulta">
                                                     <p>Data Consulta</p>
                                                     <input 
+                                                        readOnly
                                                         type="date"
                                                         value={this.formatarData(new Date(consulta.dataConsulta))}
                                                         className="item"/>
@@ -389,18 +393,21 @@ export default class Consulta extends Component{
                                                     <p>Paciente</p>
                                                     <input className="item"
                                                         type="text"
+                                                        readOnly
                                                         placeholder="Nome"
                                                         value={consulta.idPacienteNavigation.nome}
                                                     />
                                                     <p>CPF</p>
                                                     <input className="item"
                                                         type="text"
+                                                        readOnly
                                                         placeholder="CPF"
                                                         value={consulta.idPacienteNavigation.cpf}
                                                     />
                                                     <p>Data de Nascimento</p>
                                                     <input className="item"
                                                         type="date"
+                                                        readOnly
                                                         placeholder="Data de Nascimento"
                                                         value={this.formatarData(consulta.idPacienteNavigation.dataNascimento)}
                                                     />
@@ -409,7 +416,8 @@ export default class Consulta extends Component{
                                                         <p>Hora da Consulta</p>
                                                         <input 
                                                             value={consulta.horaConsulta} 
-                                                            type="time" 
+                                                            type="time"
+                                                            readOnly
                                                             className="item"/>
                                                 </div>
                                             </div>
@@ -449,7 +457,7 @@ export default class Consulta extends Component{
                                                 <div className="descricao-consulta">
                                                     <div className="descricao_conteudo">
                                                         <p>Descrição</p>
-                                                        <textarea className="desc__consulta" name="" id="" cols="30" rows="10">{consulta.descricao}</textarea>
+                                                        <textarea disabled className="desc__consulta" name="" id="" cols="30" rows="10">{consulta.descricao}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
