@@ -9,7 +9,6 @@ class Repositorio extends Component{
         this.state = {
             listaRepositorios : [],
             username: '',
-            listaAlternativa: [{id: 0, name: 'Not Found', description: 'Not Found', create_at: new Date(), size: 10}]
         }
     };
 

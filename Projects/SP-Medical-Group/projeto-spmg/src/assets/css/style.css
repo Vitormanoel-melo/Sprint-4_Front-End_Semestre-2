@@ -1,0 +1,341 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --font: 'Itim', cursive;
+}
+
+/* HEADER */
+
+
+/* Altura e largura do header */
+.header-topo{
+    width: 100%;
+    height: 94px;
+}
+
+/* Define o conteúdo principal da página */
+.conteudo{
+    max-width: 1200px;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    /* background-color: #ccc; */
+}
+
+/* Classe com display flex para ser utilizada */
+.display-jc-sb{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Dimensões da área do logo e fonte */
+.logo-header{
+    width: 18%;
+    height: 100%;
+    font-family: var(--font);
+    font-size: 18px;
+}
+
+/* Define tamanho do logo */
+.logo-header img{
+    max-width: 61px;
+}
+
+/* Define estilo para o nome ao lado do logo */
+.logo-header a{
+    text-decoration: none;
+    color: #989898;
+}
+
+/* Menu de navegação do cabeçalho */
+.menu-nav-header{
+    width: 50%;
+    height: 100%;
+    /* background-color: rgba(173, 216, 230, 0.548); */
+}
+
+/* Estilo da ul do menu */
+.menu-nav-header ul{
+    width: 100%;
+    height: 100%;
+    list-style-type: none;
+}
+
+/* Estilo dos links do menu */
+.menu-nav-header a{
+    text-transform: uppercase;
+    font-size: 17px;
+    color: #989898;
+    text-decoration: none;
+    font-family: var(--font);
+}
+
+.menu-nav-header a:hover{
+    color: rgba(0, 0, 0, 0.514);
+}
+
+/* BANNER */
+
+
+/* Define dimensões e imagem do banner */
+.banner{
+    width: 100%;
+    height: 600px;
+    /* background-color: rgba(153, 205, 50, 0.479); */
+    background-image: linear-gradient(#81afd456,
+    #81afd456), url('../img/banner.png');
+    background-repeat: no-repeat;
+    background-size:contain;
+    background-attachment: fixed;
+    position: absolute;
+    font-family: var(--font);
+}
+
+/* Conteúdo que terá dentro do banner */
+.conteudo-banner{
+    width: 100%;
+    height: 600px;
+    /* background-color: rgba(153, 205, 50, 0.479); */
+    position: relative;
+    font-family: var(--font);
+    color: #ffffff;
+    text-shadow: #645E5E 5px 5px 5px;
+}
+
+/* Texto que terá no banner */
+.texto-banner{
+    width: 40%;
+    font-size: 25px;
+}
+
+/* Informações de contado */
+.contato{
+    width: 40%;
+    height: 80px;
+    font-size: 25px;
+}
+
+.contato p{
+    margin-left: 0.89em;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+/* INFORMAÇÕES */
+
+.informacoes{
+    width: 100%;
+    height: 200px;
+    /* background-color: aquamarine; */
+    margin: 3em 0;
+}
+
+.info{
+    width: 14%;
+    height: 100%;
+    /* background-color: blueviolet; */
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.info p{
+    margin-top: 0.5em;
+    color: #645E5E;
+    font-family: var(--font);
+}
+
+.info:nth-child(1) img{
+    max-width: 100px;
+}
+
+.info:nth-child(2) img{
+    max-width: 80px;
+}
+
+.info:nth-child(3) img{
+    max-width: 80px;
+}
+
+/* CLÍNICAS */
+
+.clinicas-title{
+    width: 100%;
+    height: 70px;
+    border-bottom: solid 1px #9898989c;
+    text-align: center;
+    font-family: var(--font);
+    color: #989898;
+    text-transform: uppercase;
+}
+
+.clinicas{
+    width: 100%;
+    margin: auto;
+    /* background-color: rgba(255, 255, 0, 0.459); */
+    padding: 3em 0;
+    border-bottom: solid 1px #9898989c;
+}
+
+.clinica-infos{
+    width: 600px;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* background-color: #ccc; */
+    margin-top: 3em;
+    margin-bottom: 2em;
+    font-family: var(--font);
+    color: #989898;
+}
+
+.mapa{
+    height: 100%;
+    display: flex;
+}
+
+.clinica-infos img{
+    width: 100%;
+    max-width: 130px;
+    height: 130px;
+}
+
+.endereco{
+    /* height: 50%; */
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    /* background-color: whitesmoke; */
+    word-wrap: break-word;
+}
+
+.endereco h3{
+    margin-bottom: 1em;
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.endereco p{
+    font-size: 19px;
+    margin-bottom: 0.5em;
+}
+
+
+/* MÉDICOS */
+
+.medicos{
+    font-family: var(--font);
+}
+
+.medicos-background{
+    width: 100%;
+    height: 550px;
+    font-family: var(--font);
+    display: flex;
+    flex-direction: column;
+    /* background-color: lightgreen; */
+    justify-content: center;
+}
+
+
+.cor_fundo{
+    width: 100%;
+    height: 450px;
+    /* background-color: #81afd473; */
+    transform: skewY(-4.2deg);
+}
+
+.info-medico{
+    width: 100%;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    /* background-color: #81afd44f; */
+    background: linear-gradient(#81afd494,
+    #81afd450);
+}
+
+.medico{
+    width: 60%;
+    /* background-color: lightblue; */
+    margin: auto;
+}
+
+.medico img{
+    max-width: 160px;
+    border: white solid 1px;
+    border-radius: 100%;
+}
+
+.frase-medico{
+    width: 70%;
+    font-size: 20px;
+    color: #645E5E;
+}
+
+
+/* FOOTER */
+
+
+.footer{
+    width: 100%;
+    height: 155px;
+    color: #989898;
+    border-top: solid 1px #9898989c;
+    font-family: var(--font);
+}
+
+.info-footer{
+    width: 33%;
+    height: 100%;
+    /* background-color: rgba(204, 204, 204, 0.356); */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.info-footer a{
+    text-decoration: none;
+    color: #989898;
+}
+
+.info-footer a:hover{
+    text-decoration: underline;
+    color: rgba(0, 0, 0, 0.514);
+}
+
+.logo-footer{
+    width: 33%;
+    height: 100%;
+    /* background-color: rgba(204, 204, 204, 0.685); */
+}
+
+.logo-footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-footer img{
+    max-width: 104px;
+}
+
+.info-footer-direitos{
+    width: 33%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
