@@ -11,9 +11,7 @@ class ConsultaPadrao extends Component{
         super(props)
 
         this.state = {
-            listaConsultas : [],
-            idConsultaAlterada: 0,
-            descricao : ''
+
         }
     }
 

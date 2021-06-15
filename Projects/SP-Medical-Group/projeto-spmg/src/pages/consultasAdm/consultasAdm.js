@@ -23,9 +23,11 @@ export default class Consulta extends Component{
             dataConsulta : new Date,
             horaConsulta : new Date,
             isLoading : false,
+            
             errorMessage : '',
-
-            errorMessageData : ''
+            errorMessageData : '',
+            errorMessageIdPaciente: '',
+            errorMessageIdMedico: ''
         }
     }
 
@@ -97,6 +99,7 @@ export default class Consulta extends Component{
         })
     }
 
+    // Busca todas as situações
     buscarSituacoes = () => {
         axios('http://localhost:5000/api/situacoes', {
             headers: {
@@ -113,19 +116,22 @@ export default class Consulta extends Component{
         .catch(erro => console.log(erro))
     }
 
+    // Limpa o valor dos states 'idMedico, idPaciente, dataConsulta, horaConsulta'
     limparCampos = () => {
         this.setState({
             idMedico : 0,
             idPaciente : 0,
             dataConsulta : new Date(),
-            horaConsulta : ''
+            horaConsulta : '',
+            errorMessageIdMedico : '',
+            errorMessageIdPaciente : '',
         })
     }
 
-    cadastrarConsulta = (event) => {
+    // Cadastra uma consulta
+    cadastrarConsulta = () => {
 
-        event.preventDefault()
-
+        // Cria um objeto consulta e armazena os valores de alguns states
         var consulta = {
             idMedico : this.state.idMedico,
             idPaciente : this.state.idPaciente,
@@ -133,37 +139,89 @@ export default class Consulta extends Component{
             horaConsulta : this.state.horaConsulta
         }
 
-        this.setState({ isLoading : true, errorMessage : '' })
-
+        // Faz a requisição
         axios.post('http://localhost:5000/api/consultas', consulta, {
             headers: {
                 'Authorization' : 'Bearer ' + localStorage.getItem('login-user-acess')
             }
         })
 
+        // Promise retornada
         .then(resposta => {
+            // Se o status code da resposta for 201 - Created, significa que a requisição teve sucesso
             if(resposta.status === 201){
+                // Muda o isLoading para false
                 this.setState({ isLoading : false });
             }
         })
         
+        // Se der algum erro, trata esse erro
         .catch( erro => {
-            console.log("Este é o erro: " + erro)
-            this.setState({ isLoading : false, errorMessage : 'Informações Inválidas!' })
+            // e muda o isLoading para false e a mensagem de erro para 'Informações Inválidas'
+            // console.log("Este é o erro: " + erro)
+            this.setState({ isLoading : false, errorMessage : 'Algo saiu errado! Verifique os campos e tente novamente!' })
         })
 
+        // Busca as consultas
         .then(this.buscarConsultas)
+        // Limpa os campos
         .then(this.limparCampos)
     }
 
-    atualizaEstado = async (event) => {
-        await this.setState({ [event.target.name] : event.target.value }, () => {
-            console.log(this.state.idSituacao)
+
+    // Função pela qual vai ser validado o cadastro
+    validarCadastro = (event) => {
+        // Ignora o comportamento padrão do navegador
+        event.preventDefault()
+
+        // Define os states isLoading como true e errorMessage, errorMessageIdPaciente,
+        // errorMessageIdMedico, errorMessageData como vazio
+        this.setState
+        ({
+            isLoading : true,
+            errorMessage : '', 
+            errorMessageIdPaciente : '', 
+            errorMessageIdMedico : '', 
+            errorMessageData: '' 
         })
 
+        // Verifica se o idPaciente e o idMedico são respectivamente igual à 0
+        this.state.idPaciente == 0 && this.state.idMedico == 0 ?
+        // se for, atualiza os seguintes states com as seguintes informações
+        this.setState({
+            isLoading : false, 
+            errorMessageIdMedico : 'Escolha um médico',
+            errorMessageIdPaciente : 'Escolha um Paciente'}) :
+        
+        // se a condição anterior não for atendida
+        // verifica se o idMedico é igual a 0
+        this.state.idMedico == 0 ?
+        // se for, atualiza os seguintes states
+        this.setState({isLoading : false, errorMessageIdMedico : 'Escolha um médico'}) :
+
+        // se a condição anterior não for verdadeira
+        // verifica se o idPaciente é igual a 0
+        this.state.idPaciente == 0 ?
+         // se for, atualiza os seguintes states
+        this.setState({isLoading : false, errorMessageIdPaciente : 'Escolha um Paciente '}) :
+
+        // se a condição anterior não for atendida, executa a seguinte função
+        this.cadastrarConsulta()
+    }
+
+    // Função que atualiza os estados
+    atualizaEstado = async (event) => {
+        // Pega o name de onde foi executado a função e adiciona o valor
+        await this.setState({ [event.target.name] : event.target.value }, () => {
+            console.log(this.state.idMedico, this.state.idPaciente)
+        })
+
+        // Se data consulta for menor que a dataAtual
         if(this.state.dataConsulta < this.formatarData(new Date())){
+            // Adiciona uma mensagem ao state errorMessageData
             this.setState({ errorMessageData : 'Digite uma data válida' });
         }else{
+            // Se não, o state errorMessageData ficará vazio
             this.setState({ errorMessageData : '' });
         }
     }
@@ -196,27 +254,34 @@ export default class Consulta extends Component{
         return dataFormatada
     }
 
+    // Função que deleta uma consulta recebendo o id da consulta como parâmetro
     deletarConsulta = (idConsulta) => {
+        // Faz a requisição mandando o id da consulta pela URL e mandando o token pelo headers
         axios.delete('http://localhost:5000/api/consultas/' + idConsulta, {
             headers: {
                 'Authorization' : 'Bearer ' + localStorage.getItem('login-user-acess')
             }
         })
 
+        // Promise retornada
         .then(resposta => {
+            // Se o status da resposta for 204 - No Content
             if(resposta.status === 204){
+                // Escreve uma mensagem no console do navegador
                 console.log('Consulta excluída com sucesso')
             }
         })
 
+        // Se ocorrer algum erro escreve esse erro no console do navegador
         .catch(erro => console.log(erro))
-
+        // Atualiza a lista de consultas
         .then(this.buscarConsultas)
     }
 
+    // Função que muda a situação de uma consulta
     mudarSituacaoConsulta = (event) => {
-        // console.log(event.target.value)
-        // console.log(event.target.id)
+        // Faz a requisição passando pela requisição o id de onde ocorreu o evento, passa o id da situação
+        // pelo corpo da requisição e manda o token do usuário pelo header
         axios.patch('http://localhost:5000/api/consultas/atualizar/situacao/' + event.target.id, {
             idSituacao : event.target.value
         },{
@@ -225,17 +290,22 @@ export default class Consulta extends Component{
             }
         })
 
+        // Promise retornada pela requisição
         .then(resposta => {
+            // Se o status da resposta for 200 - Ok
             if(resposta.status === 200){
+                // Escreve uma mensagem no console do navegador
                 console.log('Situação da consulta atualizada com sucesso!')
             }
         })
 
+        // Se ocorre algum erro, escreve esse erro no console do navegador
         .catch(erro => console.log(erro))
 
         .then(this.buscarConsultas)
     }
 
+    // Executa o que estiver dentro a partir do momento em que o componente é renderizado
     componentDidMount(){
         this.buscarMedicos()
         this.buscarPacientes()
@@ -253,7 +323,7 @@ export default class Consulta extends Component{
                         <div className="conteudo-cadastro">
                             <div className="area-delimitada-cad">
                                 <h2>Cadastrar Consulta</h2>
-                                <form onSubmit={this.cadastrarConsulta} className="campos-cad-consulta">
+                                <form onSubmit={this.validarCadastro} className="campos-cad-consulta">
                                     <div className="campo-consulta">
                                         <div className="cad-consulta">
                                             <div className="item-cad-consulta">
@@ -262,8 +332,9 @@ export default class Consulta extends Component{
                                                     <select 
                                                         name="idMedico" 
                                                         value={this.state.idMedico}
-                                                        onChange={this.atualizaEstado}> 
-                                                        <option value="0">Selecione um médico...</option>
+                                                        onChange={this.atualizaEstado}
+                                                        required> 
+                                                        <option value={0}>Selecione um médico...</option>
                                                         {
                                                             this.state.listaMedicos.map((medico) =>{
                                                                 return(
@@ -274,7 +345,9 @@ export default class Consulta extends Component{
                                                             })
                                                         }
                                                     </select>
+                                                    
                                                 }
+                                                <p style={{color: 'red', fontSize: '15px'}}>{this.state.errorMessageIdMedico}</p>
                                             </div>
                                             <div className="item-cad-consulta">
                                                 <p>Paciente</p>
@@ -284,7 +357,7 @@ export default class Consulta extends Component{
                                                         onChange={this.atualizaEstado} 
                                                         value={this.state.idPaciente}
                                                         required>
-                                                        <option value="0" >Selecione...</option>
+                                                        <option value={0} >Selecione um paciente...</option>
                                                         {
                                                             this.state.listaPacientes.map((paciente) =>{
                                                                 return(
@@ -296,6 +369,7 @@ export default class Consulta extends Component{
                                                         }
                                                     </select>    
                                                 }
+                                                <p style={{color: 'red', fontSize: '15px'}}>{this.state.errorMessageIdPaciente}</p>
                                             </div>
                                         </div>
                                         <div className="cad-consulta">
@@ -324,7 +398,17 @@ export default class Consulta extends Component{
                                         </div>
                                     </div>
                                     <div className="btn-cad-consulta">
-                                        <button type="submit">Cadastrar</button>
+                                        {
+                                            this.state.isLoading ?
+                                            <button type="submit" disabled >Loading...</button> :
+                                            <div className="area-cad">
+                                                <p style={{color: 'red', fontSize: '15px'}}
+                                                >{this.state.errorMessage}</p>
+                                                <button type="submit">
+                                                    Cadastrar
+                                                </button>
+                                            </div>
+                                        }
                                     </div>
                                 </form>
                             </div>

@@ -50,14 +50,18 @@ class Consulta extends Component{
         })
     }
 
+    // Função que atualiza os estados
     atualizaEstado = async (event) => {
+        // Pega o name de onde foi executado a função e adiciona o valor
         await this.setState({ [event.target.name] : event.target.value, idConsultaAlterada : event.target.id }, () => {
             // console.log(this.state.descricao, this.state.idConsultaAlterada)
         })
 
+        // chama a função limparCampos
         this.limparCampos()
     }
 
+    // Função que limpa o campo mensagemSucesso
     limparCampos = () => {
         this.setState({ mensagemSucesso : '' })
     }
@@ -90,31 +94,43 @@ class Consulta extends Component{
         return dataFormatada
     }
 
+    // Função que atualiza a descrição de uma consulta
     alterarDescricao = (event) => {
+        // Ignora o comportamento padrão do navegador(carregar a página) ao submeter um formulário
         event.preventDefault();
 
+        // Define o state mensagemSucesso como vazio
         this.setState({mensagemSucesso : ''})
         
+        // Faz a requisição passando na url o id da consulta que está sendo alterada e no corpo é passado 
+        // a nova descrição da consulta, no headers é colocado o token do usuário
         axios.patch('http://localhost:5000/api/consultas/descricao/' + this.state.idConsultaAlterada, {
             descricao : this.state.descricao
         }, {
             headers: { 'Authorization' : 'Bearer ' + localStorage.getItem('login-user-acess')}
         })
 
+        // Promise retornada pela requisição
         .then(resposta => {
+            // Se o status da resposta for 204 - No content
             if(resposta.status === 204){
+                // define a mensagem 'Descrição atualizada com sucesso' no state mensagemSucesso
                 this.setState({ mensagemSucesso : 'Descrição atualizada com sucesso' })
             }
         })
 
+        // se der algum erro, define a mensagem 'Algo deu errado' n state mensagemSucesso
         .catch(erro => {
             this.setState({mensagemSucesso : 'Algo deu errado '})
         })
 
+        // Busca as consultas
         .then(this.buscarConsultas)
     }
 
+    // Função que atualiza e gerencia a mensagem de sucesso quando uma descrição é alterada
     atualizarMensagem = (id) => {
+        // Enquato o state idConsultaAlterada for igual ao id que está sendo recebido, retorna 'sim'
         while(this.state.idConsultaAlterada == id){
             return 'sim'
         }
