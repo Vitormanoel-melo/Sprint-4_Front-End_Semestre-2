@@ -46,7 +46,7 @@ class Consulta extends Component{
         // Se der algum erro
         .catch(erro => {
             // escreve no console do navegador este erro.
-            console.log(erro)
+            erro
         })
     }
 
@@ -54,7 +54,7 @@ class Consulta extends Component{
     atualizaEstado = async (event) => {
         // Pega o name de onde foi executado a função e adiciona o valor
         await this.setState({ [event.target.name] : event.target.value, idConsultaAlterada : event.target.id }, () => {
-            // console.log(this.state.descricao, this.state.idConsultaAlterada)
+            
         })
 
         // chama a função limparCampos
@@ -156,6 +156,7 @@ class Consulta extends Component{
                                                     <input className="item"
                                                         readOnly
                                                         type="text"
+                                                        disabled
                                                         placeholder="Nome"
                                                         value={consulta.nomeMedico}
                                                     />
@@ -165,6 +166,7 @@ class Consulta extends Component{
                                                         <div>
                                                             <p>CRM</p>
                                                             <input className="item"
+                                                            disabled
                                                             readOnly
                                                             type="text"
                                                             placeholder="CRM"
@@ -176,6 +178,7 @@ class Consulta extends Component{
                                                     <p>Especialidade</p>
                                                     <input className="item"
                                                         readOnly
+                                                        disabled
                                                         type="text"
                                                         placeholder="Especialidade"
                                                         value={consulta.especialidade}
@@ -185,6 +188,7 @@ class Consulta extends Component{
                                                     <p>Data Consulta</p>
                                                     <input 
                                                         readOnly
+                                                        disabled
                                                         type="date"
                                                         value={this.formatarData(new Date(consulta.dataConsulta))}
                                                         className="item"/>
@@ -196,6 +200,7 @@ class Consulta extends Component{
                                                     <input className="item"
                                                         readOnly
                                                         type="text"
+                                                        disabled
                                                         placeholder="Nome"
                                                         value={consulta.nomePaciente}
                                                     />
@@ -206,6 +211,7 @@ class Consulta extends Component{
                                                             <p>CPF</p>
                                                         <input className="item"
                                                         type="text"
+                                                        disabled
                                                         readOnly
                                                         placeholder="CPF"
                                                         value={consulta.cpf}
@@ -216,6 +222,7 @@ class Consulta extends Component{
                                                     <p>Data de Nascimento</p>
                                                     <input className="item"
                                                         readOnly
+                                                        disabled
                                                         type="date"
                                                         placeholder="Data de Nascimento"
                                                         value={this.formatarData(consulta.dataNascimento)}
@@ -225,6 +232,7 @@ class Consulta extends Component{
                                                         <p>Hora da Consulta</p>
                                                         <input 
                                                             readOnly
+                                                            disabled
                                                             value={consulta.horaConsulta} 
                                                             type="time" 
                                                             className="item"/>
@@ -236,6 +244,7 @@ class Consulta extends Component{
                                                     <input 
                                                         className="item"
                                                         readOnly
+                                                        disabled
                                                         value={consulta.situacao}
                                                         placeholder="Situação"
                                                         style={

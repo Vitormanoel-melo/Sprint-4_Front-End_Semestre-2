@@ -17,6 +17,7 @@ export default class Consulta extends Component{
             listaPacientes : [],
             listaMedicos : [],
             listaSituacoes : [],
+            idConsulta: 0,
             idMedico : 0,
             idPaciente : 0,
             idSituacao : 0,
@@ -27,7 +28,8 @@ export default class Consulta extends Component{
             errorMessage : '',
             errorMessageData : '',
             errorMessageIdPaciente: '',
-            errorMessageIdMedico: ''
+            errorMessageIdMedico: '',
+            successMessage : ''
         }
     }
 
@@ -45,7 +47,7 @@ export default class Consulta extends Component{
             }
         })
 
-        .catch(erro => console.log(erro))
+        .catch(erro => erro)
     }
 
     // busca todas os medicos
@@ -62,7 +64,7 @@ export default class Consulta extends Component{
             }
         })
 
-        .catch(erro => console.log(erro))
+        .catch(erro => erro)
     }
 
     // busca todas as consultas
@@ -94,8 +96,7 @@ export default class Consulta extends Component{
 
         // Se der algum erro
         .catch(erro => {
-            // escreve no console do navegador este erro.
-            console.log(erro)
+            erro
         })
     }
 
@@ -113,12 +114,13 @@ export default class Consulta extends Component{
             }
         })
 
-        .catch(erro => console.log(erro))
+        .catch(erro => erro)
     }
 
     // Limpa o valor dos states 'idMedico, idPaciente, dataConsulta, horaConsulta'
     limparCampos = () => {
         this.setState({
+            idConsulta : 0,
             idMedico : 0,
             idPaciente : 0,
             dataConsulta : new Date(),
@@ -151,7 +153,7 @@ export default class Consulta extends Component{
             // Se o status code da resposta for 201 - Created, significa que a requisição teve sucesso
             if(resposta.status === 201){
                 // Muda o isLoading para false
-                this.setState({ isLoading : false });
+                this.setState({ isLoading : false, successMessage : 'Consulta cadastrada com sucesso!' });
             }
         })
         
@@ -182,7 +184,8 @@ export default class Consulta extends Component{
             errorMessage : '', 
             errorMessageIdPaciente : '', 
             errorMessageIdMedico : '', 
-            errorMessageData: '' 
+            errorMessageData: '',
+            successMessage : ''
         })
 
         // Verifica se o idPaciente e o idMedico são respectivamente igual à 0
@@ -212,9 +215,7 @@ export default class Consulta extends Component{
     // Função que atualiza os estados
     atualizaEstado = async (event) => {
         // Pega o name de onde foi executado a função e adiciona o valor
-        await this.setState({ [event.target.name] : event.target.value }, () => {
-            console.log(this.state.idMedico, this.state.idPaciente)
-        })
+        await this.setState({ [event.target.name] : event.target.value })
 
         // Se data consulta for menor que a dataAtual
         if(this.state.dataConsulta < this.formatarData(new Date())){
@@ -254,6 +255,10 @@ export default class Consulta extends Component{
         return dataFormatada
     }
 
+    buscarConsultaDelete = (idConsultaDeletar) => {
+        this.setState({ idConsulta : idConsultaDeletar })
+    }
+
     // Função que deleta uma consulta recebendo o id da consulta como parâmetro
     deletarConsulta = (idConsulta) => {
         // Faz a requisição mandando o id da consulta pela URL e mandando o token pelo headers
@@ -267,13 +272,12 @@ export default class Consulta extends Component{
         .then(resposta => {
             // Se o status da resposta for 204 - No Content
             if(resposta.status === 204){
-                // Escreve uma mensagem no console do navegador
-                console.log('Consulta excluída com sucesso')
+                // ....
             }
         })
 
         // Se ocorrer algum erro escreve esse erro no console do navegador
-        .catch(erro => console.log(erro))
+        .catch(erro => erro)
         // Atualiza a lista de consultas
         .then(this.buscarConsultas)
     }
@@ -295,12 +299,12 @@ export default class Consulta extends Component{
             // Se o status da resposta for 200 - Ok
             if(resposta.status === 200){
                 // Escreve uma mensagem no console do navegador
-                console.log('Situação da consulta atualizada com sucesso!')
+                // console.log('Situação da consulta atualizada com sucesso!')
             }
         })
 
         // Se ocorre algum erro, escreve esse erro no console do navegador
-        .catch(erro => console.log(erro))
+        .catch(erro => erro)
 
         .then(this.buscarConsultas)
     }
@@ -402,8 +406,9 @@ export default class Consulta extends Component{
                                             this.state.isLoading ?
                                             <button type="submit" disabled >Loading...</button> :
                                             <div className="area-cad">
-                                                <p style={{color: 'red', fontSize: '15px'}}
-                                                >{this.state.errorMessage}</p>
+                                                <p style={this.state.successMessage !== '' ?
+                                                {color: 'green', fontSize: '15px'} : {color: 'red', fontSize: '15px'} }
+                                                >{this.state.errorMessage}{this.state.successMessage}</p>
                                                 <button type="submit">
                                                     Cadastrar
                                                 </button>
@@ -446,6 +451,7 @@ export default class Consulta extends Component{
                                                         placeholder="Nome"
                                                         value={consulta.idMedicoNavigation.nome}
                                                         onChange={this.atualizaEstado}
+                                                        disabled
                                                     />
                                                     <p>CRM</p>
                                                     <input className="item"
@@ -453,6 +459,7 @@ export default class Consulta extends Component{
                                                         type="text"
                                                         placeholder="CRM"
                                                         value={consulta.idMedicoNavigation.crm}
+                                                        disabled
                                                     />
                                                     <p>Especialidade</p>
                                                     <input className="item"
@@ -460,6 +467,7 @@ export default class Consulta extends Component{
                                                         type="text"
                                                         placeholder="Especialidade"
                                                         value={consulta.idMedicoNavigation.idEspecialidadeNavigation.descricao}
+                                                        disabled
                                                     />
                                                     
                                                 </div>
@@ -469,6 +477,7 @@ export default class Consulta extends Component{
                                                         readOnly
                                                         type="date"
                                                         value={this.formatarData(new Date(consulta.dataConsulta))}
+                                                        disabled
                                                         className="item"/>
                                                 </div>
                                             </div>
@@ -478,6 +487,7 @@ export default class Consulta extends Component{
                                                     <input className="item"
                                                         type="text"
                                                         readOnly
+                                                        disabled
                                                         placeholder="Nome"
                                                         value={consulta.idPacienteNavigation.nome}
                                                     />
@@ -485,6 +495,7 @@ export default class Consulta extends Component{
                                                     <input className="item"
                                                         type="text"
                                                         readOnly
+                                                        disabled
                                                         placeholder="CPF"
                                                         value={consulta.idPacienteNavigation.cpf}
                                                     />
@@ -492,6 +503,7 @@ export default class Consulta extends Component{
                                                     <input className="item"
                                                         type="date"
                                                         readOnly
+                                                        disabled
                                                         placeholder="Data de Nascimento"
                                                         value={this.formatarData(consulta.idPacienteNavigation.dataNascimento)}
                                                     />
@@ -501,6 +513,7 @@ export default class Consulta extends Component{
                                                         <input 
                                                             value={consulta.horaConsulta} 
                                                             type="time"
+                                                            disabled
                                                             readOnly
                                                             className="item"/>
                                                 </div>
@@ -558,30 +571,29 @@ export default class Consulta extends Component{
                                             </div>
                                             <div key={consulta.idConsulta}  className="btn-excluir_consulta">
                                                 {
-                                                    parseJwt().role === '1' &&
-                                                    <Link onClick={() => this.deletarConsulta(consulta.idConsulta)}><i className="far fa-trash-alt"></i></Link>
-                                                }
-                                            </div>
-                                            {/* <div className="btn-excluir_consulta">
-                                                {
-                                                    <div className="area-botao">
-                                                        <div className="deletar_consulta">
-                                                            <div id='delete_con'>
-                                                                <p>Deseja excluir essa consulta?</p>
-                                                                <div>
-                                                                    <button value="sim" >SIM</button>
-                                                                    <button value="nao" >NÃO</button>
-                                                                </div>
+                                                    this.state.idConsulta === consulta.idConsulta &&
+                                                    <div className="confirm-exluir">
+                                                        <div>Deseja excluir essa consulta?</div>
+                                                        <div style={{display: 'flex'}}>
+                                                            <div className="btn-confirmar"> 
+                                                                <Link onClick={() => this.deletarConsulta(consulta.idConsulta)}>Sim</Link>
+                                                            
+                                                                <Link onClick={() => this.buscarConsultaDelete(0)}>Não</Link>
                                                             </div>
                                                         </div>
-                                                        <a onClick={() => displayExcluir()}><i className="far fa-trash-alt"></i></a>
                                                     </div>
                                                 }
-                                            </div> */}
+                                                {
+                                                    parseJwt().role === '1' &&
+                                                    <div className="icone-excluir">
+                                                        <Link onClick={() => this.buscarConsultaDelete(consulta.idConsulta)} ><i className="far fa-trash-alt"></i></Link>       
+                                                    </div>
+                                                }
+                                            </div>
                                         </div>
                                     </form>
                                 )
-                            })
+                            }).reverse()
                         }
                     </section>
                     

@@ -390,61 +390,61 @@ body {
     align-items: center;
 }
 
-.area-botao {
-    width: 100%; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center;
-    /* background-color: violet; */
-}
-
-.deletar_consulta {
-    width: 300px;
-    height: 50px;
+.confirm-exluir {
+    width: 290px;
+    height: 100%; 
+    /* background-Color: rgba(204, 204, 204, 0.452); */
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    /* background-color: lightgreen; */
+    flex-Direction: column; 
+    justify-Content: space-around;
+    align-Items: center;
 }
 
-.area-botao button {
-    width: 80px;
-    height: 22px;
-    margin-left: 1em;
-}
-
-.area-botao button:nth-child(1) {
-    background-color: rgba(0, 128, 0, 0.664);
-    border: none;
-    border-radius: 5px;
-    color: white;
-}
-
-.area-botao button:nth-child(2) {
-    background: linear-gradient(red,
-    rgba(255, 0, 43, 0.705));
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-family: var(--font);
-}
-
-#delete_con {
-    width: 100%;
-    height: 100%;
-    display: none;
-    flex-direction: column;
-    align-items: center;
+.btn-confirmar {
+    /* background-color:blueviolet; */
+    width: 150px;
+    height: 25px;
+    display: flex;
     justify-content: space-around;
+    align-items: center;
 }
 
-.btn-excluir_consulta a {
+.btn-confirmar a{
+    width: 45%;
+    height: 90%;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    /* background-color: blue; */
+    text-align: center;
+    border-radius: 5px;
+    /* border: black solid 1px; */
+}
+
+.btn-confirmar a:nth-child(1){
+    color: green;
+}
+
+.btn-confirmar a:nth-child(2){
+    color: red;
+}
+
+.btn-confirmar a:nth-child(1):hover{
+    color: #FFF;
+    background-color: rgba(0, 128, 0, 0.685);
+}
+
+.btn-confirmar a:nth-child(2):hover{
+    color: #FFF;
+    background-color: rgba(255, 0, 0, 0.692);
+}
+
+.icone-excluir a {
     font-size: 22px;
     color: #989898;
 }
 
-.btn-excluir_consulta a:hover {
+.icone-excluir a:hover {
     color: rgba(255, 0, 0, 0.884);
     transition: 0.5s;
 }

@@ -92,7 +92,7 @@
     background-image: linear-gradient(#81afd456,
     #81afd456), url('../img/banner.png');
     background-repeat: no-repeat;
-    background-size:contain;
+    background-size:cover;
     background-attachment: fixed;
     position: absolute;
     font-family: var(--font);
