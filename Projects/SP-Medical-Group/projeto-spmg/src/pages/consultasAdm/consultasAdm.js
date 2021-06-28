@@ -96,7 +96,7 @@ export default class Consulta extends Component{
 
         // Se der algum erro
         .catch(erro => {
-            erro
+         
         })
     }
 
@@ -573,7 +573,7 @@ export default class Consulta extends Component{
                                                 {
                                                     this.state.idConsulta === consulta.idConsulta &&
                                                     <div className="confirm-exluir">
-                                                        <div>Deseja excluir essa consulta?</div>
+                                                        <p>Deseja excluir essa consulta?</p>
                                                         <div style={{display: 'flex'}}>
                                                             <div className="btn-confirmar"> 
                                                                 <Link onClick={() => this.deletarConsulta(consulta.idConsulta)}>Sim</Link>

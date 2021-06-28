@@ -362,6 +362,25 @@ body {
     align-items: center;
 }
 
+.btn-alterar input {
+    width: 200px;
+    height: 30px;
+    background-color: #81AFD4;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 5px;
+}
+
+.btn-alterar input:hover {
+    background-color: #ccc;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.356) 3px 3px 3px;
+    transition: 0.5s;
+}
+
 .btn-alterar button {
     width: 200px;
     height: 30px;
@@ -400,6 +419,10 @@ body {
     align-Items: center;
 }
 
+.confirm-exluir p {
+    color: rgba(0, 0, 0, 0.726);
+}
+
 .btn-confirmar {
     /* background-color:blueviolet; */
     width: 150px;
@@ -422,21 +445,21 @@ body {
 }
 
 .btn-confirmar a:nth-child(1){
-    color: green;
+    color: #81AFD4;
 }
 
 .btn-confirmar a:nth-child(2){
-    color: red;
+    color: #81AFD4;
 }
 
 .btn-confirmar a:nth-child(1):hover{
     color: #FFF;
-    background-color: rgba(0, 128, 0, 0.685);
+    background-color: #81AFD4;
 }
 
 .btn-confirmar a:nth-child(2):hover{
     color: #FFF;
-    background-color: rgba(255, 0, 0, 0.692);
+    background-color: #81AFD4;
 }
 
 .icone-excluir a {

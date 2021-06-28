@@ -1,4 +1,6 @@
 import '../../assets/css/style.css';
+import axios from 'axios';
+import React, {useState, useEffect} from 'react';
 
 // components
 import Header from '../../components/header/header'
@@ -12,6 +14,19 @@ import mapa from '../../assets/img/mapa 1.png'
 import medico_1 from '../../assets/img/medico-1.svg'
 
 function App() {
+
+//   const [ listaClinicas, setListaClinicas ] = useState([]);
+
+//   function buscarClinicas(){
+//     axios.get('http://localhost:5000/api/clinicas')
+
+//     .then(resposta => {
+//         if(resposta.status === 200){
+//             setListaClinicas(resposta.data)
+//         }
+//     })
+//   }
+  
   return (
     <div>
       <Header />

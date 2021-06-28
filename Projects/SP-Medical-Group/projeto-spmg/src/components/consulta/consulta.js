@@ -46,7 +46,6 @@ class Consulta extends Component{
         // Se der algum erro
         .catch(erro => {
             // escreve no console do navegador este erro.
-            erro
         })
     }
 
