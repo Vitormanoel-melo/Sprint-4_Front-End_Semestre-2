@@ -357,8 +357,8 @@ body {
     height: 100%;
     /* background-color: #ccc; */
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    /* flex-direction: column; */
+    justify-content: center;
     align-items: center;
 }
 

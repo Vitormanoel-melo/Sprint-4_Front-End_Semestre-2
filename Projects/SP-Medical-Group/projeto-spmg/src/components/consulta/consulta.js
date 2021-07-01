@@ -10,9 +10,10 @@ class Consulta extends Component{
 
         this.state = {
             listaConsultas : [],
-            idConsultaAlterada: 0,
+            idConsultaAlterada : 0,
             descricao : '',
-            mensagemSucesso : ''
+            mensagemSucesso : 'Consulta',
+            idMensagemSucesso : ''
         }
     }
 
@@ -52,17 +53,12 @@ class Consulta extends Component{
     // Função que atualiza os estados
     atualizaEstado = async (event) => {
         // Pega o name de onde foi executado a função e adiciona o valor
-        await this.setState({ [event.target.name] : event.target.value, idConsultaAlterada : event.target.id }, () => {
-            
-        })
-
-        // chama a função limparCampos
-        this.limparCampos()
+        await this.setState({ [event.target.name] : event.target.value })
     }
 
     // Função que limpa o campo mensagemSucesso
     limparCampos = () => {
-        this.setState({ mensagemSucesso : '' })
+        this.setState({ idConsultaAlterada : 0, descricao : '' })
     }
     
     // Função que retorna a data formatada para ser mostrada na consulta
@@ -114,7 +110,7 @@ class Consulta extends Component{
             // Se o status da resposta for 204 - No content
             if(resposta.status === 204){
                 // define a mensagem 'Descrição atualizada com sucesso' no state mensagemSucesso
-                this.setState({ mensagemSucesso : 'Descrição atualizada com sucesso' })
+                this.setState({ mensagemSucesso : 'Descrição atualizada com sucesso', idMensagemSucesso : this.state.idConsultaAlterada })
             }
         })
 
@@ -125,12 +121,14 @@ class Consulta extends Component{
 
         // Busca as consultas
         .then(this.buscarConsultas)
+
+        .then(this.limparCampos)
     }
 
     // Função que atualiza e gerencia a mensagem de sucesso quando uma descrição é alterada
     atualizarMensagem = (id) => {
         // Enquato o state idConsultaAlterada for igual ao id que está sendo recebido, retorna 'sim'
-        while(this.state.idConsultaAlterada == id){
+        while(this.state.idMensagemSucesso == id){
             return 'sim'
         }
     }
@@ -260,7 +258,14 @@ class Consulta extends Component{
                                                 <div className="descricao-consulta">
                                                     <div className="descricao_conteudo">
                                                         <p>Descrição</p>
-                                                        <textarea onChange={this.atualizaEstado} className="desc__consulta" name="descricao" id={consulta.idConsulta} cols="30" rows="10">{consulta.descricao}</textarea>
+                                                        <textarea onChange={this.atualizaEstado} 
+                                                            className="desc__consulta" name="descricao" 
+                                                            cols="30" 
+                                                            rows="10"
+                                                            // Tirar dúvida aqui!!!!!
+                                                            disabled={this.state.idConsultaAlterada == consulta.idConsulta ? '' : 'none'}>
+                                                            {consulta.descricao}
+                                                        </textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -270,21 +275,31 @@ class Consulta extends Component{
                                             <div className="btn-alterar"></div>
                                             <div className="btn-alterar">
                                                 {
-                                                    parseJwt().role === '2' ?
-                                                    <button type="submit">Alterar Descrição</button> :
-                                                    ''
+                                                    parseJwt().role === '2' && this.state.idConsultaAlterada != consulta.idConsulta &&
+                                                    <button name="idConsultaAlterada" value={consulta.idConsulta} 
+                                                            type='button'
+                                                            onClick={this.atualizaEstado}>
+                                                        Alterar Descrição
+                                                    </button>
                                                 }
+
+                                                {
+                                                    parseJwt().role === '2' && this.state.idConsultaAlterada == consulta.idConsulta &&
+                                                    <button disabled={this.state.descricao !== '' ? '' : 'none'} type='submit'>Salvar Alteração</button>
+                                                }
+
+                                                {
+                                                    parseJwt().role === '2' && this.state.idConsultaAlterada == consulta.idConsulta &&
+                                                    <button onClick={() => this.setState({ idConsultaAlterada : 0, mensagemSucesso : '' })}>Cancelar</button>
+                                                }
+
+                                                
+                                            </div>
+                                            
+                                            <div style={{textAlign: 'center'}} className="btn-alterar">
                                                 {
                                                     this.atualizarMensagem(consulta.idConsulta) === 'sim' &&
                                                     <p style={{color: 'green'}}>{this.state.mensagemSucesso}</p>
-                                                }
-                                            </div>
-                                            <div className="btn-excluir_consulta">
-                                                {
-                                                    parseJwt().role === 'administrador' ?
-                                                    <Link href="#"><i className="far fa-trash-alt"></i></Link> :
-                                                    <Link href="#" style={{display: 'none'}}><i className="far fa-trash-alt"></i></Link>
-
                                                 }
                                             </div>
                                         </div>
