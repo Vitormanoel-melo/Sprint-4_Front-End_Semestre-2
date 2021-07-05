@@ -362,26 +362,7 @@ body {
     align-items: center;
 }
 
-.btn-alterar input {
-    width: 200px;
-    height: 30px;
-    background-color: #81AFD4;
-    cursor: pointer;
-    text-transform: uppercase;
-    color: white;
-    font-weight: 500;
-    border: none;
-    border-radius: 5px;
-}
-
-.btn-alterar input:hover {
-    background-color: #ccc;
-    color: black;
-    box-shadow: rgba(0, 0, 0, 0.356) 3px 3px 3px;
-    transition: 0.5s;
-}
-
-.btn-alterar button {
+.btn-alterar button{
     width: 200px;
     height: 30px;
     background-color: #81AFD4;

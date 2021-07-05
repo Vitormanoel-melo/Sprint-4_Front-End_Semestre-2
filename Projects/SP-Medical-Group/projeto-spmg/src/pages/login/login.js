@@ -5,6 +5,7 @@ import axios from 'axios'
 import '../../assets/css/login.css'
 
 import Logo from '../../assets/img/logoSVG.svg'
+import LogoBranco from '../../assets/img/logo-branco.svg'
 
 class Login extends Component{
     constructor(props){
@@ -40,6 +41,8 @@ class Login extends Component{
                 localStorage.setItem('login-user-acess', resposta.data.token);
                 // define o state isLoading como fase
                 this.setState({isLoading : false})
+                // Chama a função para limpar os campos de login
+                this.limparCampos()
                 // empurra o usuário para a página home
                 this.props.history.push('/');
             }
@@ -53,8 +56,6 @@ class Login extends Component{
             this.setState({isLoading : false})
         })
 
-        // Chama a função para limpar os campos de login
-        this.limparCampos()
     }
 
 
@@ -75,17 +76,24 @@ class Login extends Component{
             <main>
                 <section className="login">
                     <div className="imagem-login"></div>
-
+                    
                     <div className="campos-login">
                         <div className="content-login">
                             <div className="logo">
-                                <Link to='/'><img src={Logo} alt="Logo do SP Medical Group" /></Link>
+                                <Link to='/'>
+                                    <picture>
+                                        {/* <source media="(max-width: 47.93em)" srcset="img/Banner576.jpg" /> */}
+                                        <source media="(max-width: 991px)" srcSet={LogoBranco} />
+                                        <source media="(max-width: 1920px)" srcSet={Logo} />
+                                        <img src={Logo} alt="Logo do SP Medical Group" />
+                                    </picture>
+                                </Link>
                                 <p>Seja Bem vindo!</p>
                                 <p>Faça login para acessar sua conta</p>
                             </div>
             
                             <form onSubmit={this.efetuarLogin} className="campos">
-                                <input 
+                                <input
                                     type="email"
                                     placeholder="E-mail"
                                     name="email"

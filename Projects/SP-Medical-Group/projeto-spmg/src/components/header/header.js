@@ -19,13 +19,6 @@ function Header(){
                         <li><Link to="/">Início</Link></li>
                         <li><Link to="/consultas/adm">Consultas</Link></li>
                         {
-                            // usuarioLogado() === true && 
-                            // parseJwt().role === '1' ?
-                            //     <li><Link>Cadastro</Link></li> :
-                            //     '' 
-                            
-                        }
-                        {
                             usuarioLogado() ?
                             <li><Link to="/" style={{color: 'blue'}}>Bem vindo !</Link></li> :
                             <li><Link to="/login">Login</Link></li>

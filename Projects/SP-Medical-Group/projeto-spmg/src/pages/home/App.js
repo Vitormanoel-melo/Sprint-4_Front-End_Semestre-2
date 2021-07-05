@@ -14,18 +14,34 @@ import mapa from '../../assets/img/mapa 1.png'
 import medico_1 from '../../assets/img/medico-1.svg'
 
 function App() {
+  const [listaClinicas, setListaClinicas] = useState([])
 
-//   const [ listaClinicas, setListaClinicas ] = useState([]);
+  // Busca todas as clínicas
+  function buscarClinicas(){
+    try {
+      axios('http://localhost:5000/api/clinicas/todos')
 
-//   function buscarClinicas(){
-//     axios.get('http://localhost:5000/api/clinicas')
+      .then(resposta => {
+          if(resposta.status === 200){
+            setListaClinicas(resposta.data)
+          }
+      })
 
-//     .then(resposta => {
-//         if(resposta.status === 200){
-//             setListaClinicas(resposta.data)
-//         }
-//     })
-//   }
+      .catch()
+    } catch (error) {
+        
+    }
+  }
+
+  // Função que formata o horário para mostar mostrar apenas 
+  function formatarHora(hora){
+    let horaFormatada = hora.split(':')[0]
+    horaFormatada = horaFormatada + ':' + hora.split(':')[1]
+
+    return horaFormatada
+  }
+
+  useEffect(buscarClinicas, [])
   
   return (
     <div>
@@ -43,7 +59,7 @@ function App() {
                   </div>
                   <div className="contato">
                       <p>
-                          Para agendar uma consulta ligue para uma de <a href="#__clinicas" style={{color: 'white'}}>nossas clínicas</a> 
+                          Para agendar uma consulta vá a uma de <a href="#__clinicas" style={{color: 'white'}}>nossas clínicas</a> 
                       </p>
                   </div>
               </div>
@@ -75,16 +91,22 @@ function App() {
 
         <section className="clinicas" id="__clinicas">
             <div className="conteudo">
-                <div className="clinica-infos">
-                    <div id="id-dom" className="endereco">
-                        <h3>Nome da Clínica</h3>
-                        <p>Rua endereco, numero 192</p>
-                        <p>Telefone: (11) 7981-5480 </p>
-                    </div>
-                    <div className="mapa">
-                        <img src={mapa} alt="Endereço da clínica no mapa" />
-                    </div>
-                </div>
+                {
+                    listaClinicas.map( clinica => {
+                        return(
+                            <div key={clinica.idClinica} className="clinica-infos">
+                                <div id="id-dom" className="endereco">
+                                    <h3>{clinica.razaoSocial}</h3>
+                                    <p>{clinica.endereco}</p>
+                                    <p>{clinica.dataAbertura} - {formatarHora(clinica.horarioAbertura)} às {formatarHora(clinica.horarioFechamento)}</p>
+                                </div>
+                                <div className="mapa">
+                                    <img src={mapa} alt="Endereço da clínica no mapa" />
+                                </div>
+                            </div>
+                        )
+                    })
+                }
             </div>
         </section>
 

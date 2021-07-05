@@ -276,7 +276,8 @@ class Consulta extends Component{
                                             <div className="btn-alterar">
                                                 {
                                                     parseJwt().role === '2' && this.state.idConsultaAlterada != consulta.idConsulta &&
-                                                    <button name="idConsultaAlterada" value={consulta.idConsulta} 
+                                                    <button
+                                                            name="idConsultaAlterada" value={consulta.idConsulta} 
                                                             type='button'
                                                             onClick={this.atualizaEstado}>
                                                         Alterar Descrição
@@ -285,7 +286,9 @@ class Consulta extends Component{
 
                                                 {
                                                     parseJwt().role === '2' && this.state.idConsultaAlterada == consulta.idConsulta &&
-                                                    <button disabled={this.state.descricao !== '' ? '' : 'none'} type='submit'>Salvar Alteração</button>
+                                                    <button disabled={this.state.descricao !== '' ? '' : 'none'}
+                                                    style={this.state.descricao !== '' ? {cursor: 'pointer'} : {cursor: 'no-drop'}}
+                                                    type='submit'>Salvar Alteração</button>
                                                 }
 
                                                 {
